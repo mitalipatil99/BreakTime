@@ -1,0 +1,18 @@
+steps:
+#Installing
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['--prefix', 'Break-Time-Frontend','install','react-scripts', '--save']
+ 
+#Building
+- name: 'gcr.io/cloud-builders/npm'
+  args: ['--prefix', 'Break-Time-Frontend', 'run','build']
+ 
+#Deploy
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'gcloud app deploy --version=react Break-Time-Frontend/app.yml']
+
+- id: 'Deploy springboot to App Engine'
+  name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: 'bash'
+  args: ['-c', 'gcloud app deploy --version=app1 Break-Time-Backend/app.yml']
